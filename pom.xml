@@ -6,14 +6,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>temporal-shift</artifactId>
-  <groupId>app</groupId>
+  <groupId>org.kairosdb</groupId>
   <version>1.0.0</version>
 
   <name>temporal-shift</name>
 
   <properties>
     <!-- Startup class -->
-    <application.class>app.App</application.class>
+    <application.class>org.kairosdb.temporal.App</application.class>
 
     <jooby.version>4.6.0</jooby.version>
 
@@ -41,6 +41,13 @@
       <groupId>io.jooby</groupId>
       <artifactId>jooby-guice</artifactId>
       <version>${jooby.version}</version>
+    </dependency>
+    <!-- Temporal API: generated protobuf messages and gRPC service stubs
+         (io.temporal.api.workflowservice.v1.WorkflowServiceGrpc) -->
+    <dependency>
+      <groupId>io.temporal</groupId>
+      <artifactId>temporal-serviceclient</artifactId>
+      <version>1.40.0</version>
     </dependency>
     <!-- Tests -->
     <dependency>
@@ -112,6 +119,15 @@
         <groupId>io.jooby</groupId>
         <artifactId>jooby-bom</artifactId>
         <version>${jooby.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- Keep all io.grpc artifacts aligned with the version jooby-grpc uses
+           (temporal-serviceclient otherwise drags in older grpc-api/netty) -->
+      <dependency>
+        <groupId>io.grpc</groupId>
+        <artifactId>grpc-bom</artifactId>
+        <version>1.85.1</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
