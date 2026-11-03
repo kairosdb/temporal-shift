@@ -19,9 +19,9 @@ short_description: "${project.artifactId}"
 platforms: [ LINUX ]
 
 # Working directory for app
-#  RETAIN will not change the working directory
-#  APP_HOME will change the working directory to the home of the app
-#    (where it was intalled) before running the main class
+# RETAIN will not change the working directory
+# APP_HOME will change the working directory to the home of the app
+# (where it was intalled) before running the main class
 working_dir_mode: RETAIN
 
 # Minimum version of java required (system will be searched for acceptable jvm)
