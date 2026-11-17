@@ -1,0 +1,24 @@
+The jooby grpc server isn't handling gzip compression - had to turn off in client.
+
+Some methods need check for routing - we should be able to minimize methods that need routing.  All nodes can read workflow data from C*.
+
+3 kinds of queues - 1. create work queue 2. in progress work tasks 3. activities queue
+	1. Can be queued and used for back pressure
+	2. These are sticky and need to be sent back to the same worker to preserve context
+	3. Can be queued and sent to any worker
+
+Number 1 can be offloaded to Kafka or some other durable queue. Can do priorities
+with 1 doesn't make much sense for the others.  Once a workflow starts we try to finish it as fast as possible.
+The priority is just in starting the workflow.
+
+Write ahead log
+write everything to multiple tables.  One is a recovery table and maybe others for workflow lookups.
+The first is keyed by time and bucketed (Like time series).
+Second is keyed by workflow - ok to write data twice.
+
+Visibility data is fead by reading C* and batching to OpenSearch
+Each node will have a set of threads dedicated to keeping open search up to date.
+
+Sticky tasks not getting picked up is a sign that workers are not sufficient.
+This should be based on a general latency of the system and not a hard rule 5-10sec.
+By sending the task back to a normal queue it causes more work for the worker.

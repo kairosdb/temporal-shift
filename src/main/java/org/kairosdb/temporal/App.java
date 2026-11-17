@@ -9,11 +9,9 @@ import io.jooby.guice.GuiceModule;
 public class App extends Jooby {
 
   {
-    setServerOptions(new ServerOptions().setHttp2(true));  // 1
-
     install(new GuiceModule(new MainGuiceModule()));
 
-    install(new GrpcModule(FrontendService.class));
+    install(new GrpcModule(FrontendService.class, HealthService.class));
 
     get("/", ctx -> "Welcome to Jooby!");
   }

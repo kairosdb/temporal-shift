@@ -25,3 +25,7 @@ replay_pid*
 
 # Maven build output
 target/
+
+# TLS private key (cert is intentionally committed for client use)
+certs/server.key
+conf/keystore.p12
